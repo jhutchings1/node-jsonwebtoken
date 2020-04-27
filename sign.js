@@ -90,7 +90,8 @@ module.exports = function (payload, secretOrPrivateKey, options, callback) {
   var isObjectPayload = typeof payload === 'object' &&
                         !Buffer.isBuffer(payload);
 
-  var header = Object.assign({
+  // https://github.com/auth0/node-jsonwebtoken/issues/714
+  var header = options.useHeader ? options.header : Object.assign({
     alg: options.algorithm || 'HS256',
     typ: isObjectPayload ? 'JWT' : undefined,
     kid: options.keyid
